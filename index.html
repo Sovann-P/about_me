@@ -8,6 +8,77 @@
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+  
+.skills-ai-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+@media (max-width: 640px) { .skills-ai-grid { grid-template-columns: 1fr; } }
+
+.sub-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 18px 20px;
+}
+.sub-card-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  margin-bottom: 12px;
+}
+
+.ai-tool {
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+}
+.ai-tool:last-child { border-bottom: none; }
+.ai-tool-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.ai-tool-name { font-size: 13px; color: var(--text); }
+.ai-tool-desc { font-size: 11px; color: var(--muted); margin-top: 1px; }
+
+.courses-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+  margin-top: 12px;
+}
+.courses-table thead tr {
+  border-bottom: 1px solid rgba(155,89,245,0.25);
+}
+.courses-table th {
+  text-align: left;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--accent2);
+  padding: 0 12px 8px 0;
+  font-weight: 400;
+}
+.courses-table td {
+  padding: 7px 12px 7px 0;
+  color: var(--muted);
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  vertical-align: top;
+}
+.courses-table tr:last-child td { border-bottom: none; }
+.courses-table td:first-child { color: var(--text); }
+.course-tag {
+  display: inline-block;
+  font-size: 10px;
+  padding: 2px 8px;
+  border-radius: 3px;
+  background: rgba(155,89,245,0.1);
+  border: 1px solid rgba(155,89,245,0.2);
+  color: rgba(155,89,245,0.8);
+}
   :root {
     --bg: #0a0a0f;
     --surface: #111118;
@@ -31,7 +102,6 @@
     overflow-x: hidden;
   }
 
-  /* grid bg */
   body::before {
     content: '';
     position: fixed;
@@ -63,9 +133,8 @@
     z-index: 0;
   }
 
-  main { position: relative; z-index: 1; max-width: 860px; margin: 0 auto; padding: 0 24px 80px; }
+  main { position: relative; z-index: 1; max-width: 900px; margin: 0 auto; padding: 0 24px 80px; }
 
-  /* NAV */
   nav {
     position: sticky; top: 0; z-index: 100;
     display: flex; justify-content: space-between; align-items: center;
@@ -362,14 +431,17 @@
     <div class="hero-links">
       <button onclick="navigator.clipboard.writeText('Phaysovann1@gmail.com').then(()=>{this.textContent='copied!';setTimeout(()=>this.textContent='phaysovann1@gmail.com',2000)})" class="btn btn-primary" style="cursor:pointer;">phaysovann1@gmail.com</button>
       <a href="https://www.linkedin.com/in/sovann-phay-472b76332" target="_blank" class="btn btn-ghost">LinkedIn ↗</a>
+      <a href="https://github.com/Sovann-P" target="_blank" class="btn btn-ghost">GitHub ↗</a>
     </div>
   </section>
 
   <section id="skills" style="animation-delay:0.1s">
-    <div class="section-label">Skills</div>
-    <div style="margin-bottom:16px">
-      <div style="font-size:11px;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);margin-bottom:10px">Languages</div>
-      <div class="skills-grid">
+  <div class="section-label">Skills &amp; Tools</div>
+  <div class="skills-ai-grid">
+
+    <div class="sub-card">
+      <div class="sub-card-label">Languages</div>
+      <div class="skills-grid" style="margin-bottom:16px">
         <span class="skill-pill lang">Java</span>
         <span class="skill-pill lang">JavaScript</span>
         <span class="skill-pill lang">Python</span>
@@ -378,9 +450,7 @@
         <span class="skill-pill lang">CSS</span>
         <span class="skill-pill lang">C</span>
       </div>
-    </div>
-    <div>
-      <div style="font-size:11px;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);margin-bottom:10px">Frameworks & Tools</div>
+      <div class="sub-card-label">Frameworks &amp; Tools</div>
       <div class="skills-grid">
         <span class="skill-pill">React</span>
         <span class="skill-pill">Node.js</span>
@@ -396,7 +466,34 @@
         <span class="skill-pill">Excel</span>
       </div>
     </div>
-  </section>
+
+    <div class="sub-card">
+      <div class="sub-card-label">AI Tools I Use</div>
+      <div class="ai-tool">
+        <div class="ai-tool-dot" style="background:#e03b3b;"></div>
+        <div>
+          <div class="ai-tool-name">Claude</div>
+          <div class="ai-tool-desc">Coding assistance, writing, problem-solving</div>
+        </div>
+      </div>
+      <div class="ai-tool">
+        <div class="ai-tool-dot" style="background:#9b59f5;"></div>
+        <div>
+          <div class="ai-tool-name">Gemini</div>
+          <div class="ai-tool-desc">Summarization, Google Integrations</div>
+        </div>
+      </div>
+      <div class="ai-tool">
+        <div class="ai-tool-dot" style="background:#8a8a9a;"></div>
+        <div>
+          <div class="ai-tool-name">GitHub Copilot</div>
+          <div class="ai-tool-desc">In-editor code suggestions</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
 
   <section id="projects" style="animation-delay:0.2s">
     <div class="section-label">Projects</div>
@@ -464,7 +561,36 @@
       <div class="edu-degree">Bachelor of Science, Computer Science</div>
       <div class="edu-school">Metropolitan State University — St. Paul, MN</div>
       <div class="edu-date">Expected Dec 2026</div>
-      <div class="edu-courses">Relevant coursework: Database Management · Algorithm & Data Structures · Object Oriented Design · Cybersecurity Principles · Machine Architecture</div>
+      <table class="courses-table">
+  <thead>
+    <tr>
+      <th>Course</th>
+      <th>Proficiencies</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Database Management</td>
+      <td><span class="course-tag">Data</span></td>
+    </tr>
+    <tr>
+      <td>Algorithm &amp; Data Structures</td>
+      <td><span class="course-tag">Problem Solving</span></td>
+    </tr>
+    <tr>
+      <td>Object Oriented Design</td>
+      <td><span class="course-tag">Clean Code</span></td>
+    </tr>
+    <tr>
+      <td>Cybersecurity Principles</td>
+      <td><span class="course-tag">Security</span></td>
+    </tr>
+    <tr>
+      <td>Machine Architecture</td>
+      <td><span class="course-tag">Systems</span></td>
+    </tr>
+  </tbody>
+</table>
     </div>
 
     <div class="edu-card">

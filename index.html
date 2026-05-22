@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Sovann Phay</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0a0a0f;
+    --surface: #111118;
+    --border: rgba(255,255,255,0.07);
+    --accent: #e03b3b;
+    --accent2: #9b59f5;
+    --text: #f5f5f5;
+    --muted: #8a8a9a;
+    --card: #16161f;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Mono', monospace;
+    font-size: 14px;
+    line-height: 1.7;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* grid bg */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .glow {
+    position: fixed;
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(224,59,59,0.08) 0%, transparent 70%);
+    top: -200px; left: -100px;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .glow2 {
+    position: fixed;
+    width: 500px; height: 500px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(155,89,245,0.07) 0%, transparent 70%);
+    bottom: -100px; right: -100px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  main { position: relative; z-index: 1; max-width: 860px; margin: 0 auto; padding: 0 24px 80px; }
+
+  /* NAV */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--border);
+    background: rgba(10,10,15,0.85);
+    backdrop-filter: blur(12px);
+    margin-bottom: 80px;
+  }
+  .nav-logo {
+    font-family: 'DM Mono', monospace;
+    font-weight: 400;
+    font-size: 13px;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+  }
+  .nav-logo span { color: #e03b3b; }
+  .nav-links { display: flex; gap: 28px; }
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+
+  /* HERO */
+  .hero { padding: 0 0 80px; }
+  .hero-tag {
+    display: inline-block;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    border: 1px solid rgba(224,59,59,0.35);
+    padding: 4px 12px;
+    border-radius: 100px;
+    margin-bottom: 28px;
+    animation: fadeUp 0.6s ease both;
+  }
+  .hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(42px, 7vw, 72px);
+    font-weight: 800;
+    line-height: 1.0;
+    letter-spacing: -2px;
+    margin-bottom: 8px;
+    animation: fadeUp 0.6s 0.1s ease both;
+  }
+  .hero h1 .accent { color: var(--accent); }
+  .hero-sub {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(18px, 3vw, 26px);
+    font-weight: 500;
+    color: var(--muted);
+    margin-bottom: 28px;
+    animation: fadeUp 0.6s 0.2s ease both;
+    letter-spacing: -0.5px;
+  }
+  .hero-bio {
+    max-width: 560px;
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.8;
+    margin-bottom: 36px;
+    animation: fadeUp 0.6s 0.3s ease both;
+  }
+  .hero-links {
+    display: flex; gap: 14px; flex-wrap: wrap;
+    animation: fadeUp 0.6s 0.4s ease both;
+  }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 10px 22px;
+    border-radius: 6px;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    text-decoration: none;
+    transition: all 0.2s;
+    cursor: pointer;
+  }
+  .btn-primary {
+    background: var(--accent);
+    color: #0a0a0f;
+    font-weight: 400;
+    border: none;
+  }
+  .btn-primary:hover { background: #ff5555; transform: translateY(-1px); }
+  .btn-ghost {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+  .btn-ghost:hover { border-color: rgba(255,255,255,0.2); background: rgba(255,255,255,0.04); }
+
+  /* SECTION */
+  section { margin-bottom: 72px; animation: fadeUp 0.6s ease both; }
+  .section-label {
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 24px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* SKILLS */
+  .skills-grid { display: flex; flex-wrap: wrap; gap: 8px; }
+  .skill-pill {
+    padding: 5px 14px;
+    border-radius: 4px;
+    font-size: 12px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    transition: all 0.2s;
+  }
+  .skill-pill:hover { border-color: var(--accent); color: var(--accent); background: rgba(224,59,59,0.05); }
+  .skill-pill.lang { border-color: rgba(155,89,245,0.3); color: rgba(155,89,245,0.9); }
+
+  /* EDU */
+  .edu-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px 24px;
+    margin-bottom: 12px;
+    transition: border-color 0.2s;
+  }
+  .edu-card:hover { border-color: rgba(91,106,247,0.4); }
+  .edu-degree {
+    font-family: 'Syne', sans-serif;
+    font-weight: 600;
+    font-size: 15px;
+    margin-bottom: 4px;
+    color: var(--text);
+  }
+  .edu-school { color: var(--accent2); font-size: 13px; margin-bottom: 4px; }
+  .edu-date { color: var(--muted); font-size: 12px; }
+  .edu-courses { color: var(--muted); font-size: 12px; margin-top: 10px; line-height: 1.7; }
+
+  /* PROJECTS */
+  .project-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 24px;
+    margin-bottom: 16px;
+    transition: all 0.25s;
+    position: relative;
+    overflow: hidden;
+  }
+  .project-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s;
+  }
+  .project-card:hover { border-color: rgba(224,59,59,0.25); transform: translateY(-2px); }
+  .project-card:hover::before { transform: scaleX(1); }
+  .project-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
+  .project-name {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    color: var(--text);
+  }
+  .project-date { color: var(--muted); font-size: 12px; }
+  .project-stack { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+  .stack-tag {
+    font-size: 11px;
+    padding: 2px 10px;
+    border-radius: 3px;
+    background: rgba(91,106,247,0.1);
+    border: 1px solid rgba(91,106,247,0.2);
+    color: #8b97fa;
+  }
+  .project-bullets { padding-left: 0; list-style: none; }
+  .project-bullets li {
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.7;
+    padding-left: 16px;
+    position: relative;
+    margin-bottom: 6px;
+  }
+  .project-bullets li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-size: 11px;
+    top: 2px;
+  }
+
+  /* EXPERIENCE */
+  .exp-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-left: 2px solid var(--accent);
+    border-radius: 0 10px 10px 0;
+    padding: 20px 24px;
+    margin-bottom: 12px;
+    transition: background 0.2s;
+  }
+  .exp-card:hover { background: rgba(224,59,59,0.03); }
+  .exp-header { display: flex; justify-content: space-between; margin-bottom: 6px; }
+  .exp-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 600;
+    font-size: 15px;
+  }
+  .exp-date { color: var(--muted); font-size: 12px; }
+  .exp-company { color: var(--accent); font-size: 13px; margin-bottom: 10px; }
+  .exp-bullets { padding-left: 0; list-style: none; }
+  .exp-bullets li {
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.7;
+    padding-left: 16px;
+    position: relative;
+    margin-bottom: 4px;
+  }
+  .exp-bullets li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-size: 11px;
+    top: 2px;
+  }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 32px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    color: var(--muted);
+    font-size: 12px;
+    position: relative; z-index: 1;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 600px) {
+    nav { flex-direction: column; gap: 14px; }
+    .hero h1 { letter-spacing: -1px; }
+    .project-header { flex-direction: column; gap: 4px; }
+    .exp-header { flex-direction: column; gap: 4px; }
+    footer { flex-direction: column; text-align: center; }
+  }
+</style>
+</head>
+<body>
+<div class="glow"></div>
+<div class="glow2"></div>
+
+<main>
+  <nav>
+    <div class="nav-logo"><span>48 65 6C 6C 6F</span></div>
+    <div class="nav-links">
+      <a href="#skills">Skills</a>
+      <a href="#projects">Projects</a>
+      <a href="#education">Education</a>
+      <a href="#experience">Experience</a>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <h1>Sovann<br><span class="accent">Phay</span></h1>
+    <div class="hero-sub">CS Student & Aspiring SWE + Cybersecurity Specialist</div>
+    <p class="hero-bio">
+      Motivated CS student at Metropolitan State University crafting full-stack applications and diving deep into AI, web development, and cybersecurity. I build things that are fast, secure, and actually useful — from real-time AI avatars to multiplayer games — driven by a relentless curiosity for how systems work and how to break (and secure) them.
+    </p>
+    <div class="hero-links">
+      <a href="mailto:Phaysovann1@gmail.com" class="btn btn-primary">phaysovann1@gmail.com</a>
+      <a href="https://www.linkedin.com/sovann-phay" target="_blank" class="btn btn-ghost">LinkedIn ↗</a>
+    </div>
+  </section>
+
+  <section id="skills" style="animation-delay:0.1s">
+    <div class="section-label">Skills</div>
+    <div style="margin-bottom:16px">
+      <div style="font-size:11px;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);margin-bottom:10px">Languages</div>
+      <div class="skills-grid">
+        <span class="skill-pill lang">Java</span>
+        <span class="skill-pill lang">JavaScript</span>
+        <span class="skill-pill lang">Python</span>
+        <span class="skill-pill lang">SQL</span>
+        <span class="skill-pill lang">HTML</span>
+        <span class="skill-pill lang">CSS</span>
+        <span class="skill-pill lang">C</span>
+      </div>
+    </div>
+    <div>
+      <div style="font-size:11px;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);margin-bottom:10px">Frameworks & Tools</div>
+      <div class="skills-grid">
+        <span class="skill-pill">React</span>
+        <span class="skill-pill">Node.js</span>
+        <span class="skill-pill">Flutter</span>
+        <span class="skill-pill">Firebase</span>
+        <span class="skill-pill">MySQL</span>
+        <span class="skill-pill">Git</span>
+        <span class="skill-pill">GitHub</span>
+        <span class="skill-pill">JavaFX</span>
+        <span class="skill-pill">WebRTC</span>
+        <span class="skill-pill">REST APIs</span>
+        <span class="skill-pill">Wireshark</span>
+        <span class="skill-pill">Excel</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects" style="animation-delay:0.2s">
+    <div class="section-label">Projects</div>
+
+    <div class="project-card">
+      <div class="project-header">
+        <div class="project-name">Real-Time Digital Human Interface</div>
+        <div class="project-date">Jan 2026</div>
+      </div>
+      <div class="project-stack">
+        <span class="stack-tag">JavaScript</span>
+        <span class="stack-tag">Tavus Persona API</span>
+        <span class="stack-tag">Daily.js</span>
+        <span class="stack-tag">WebRTC</span>
+        <span class="stack-tag">REST APIs</span>
+      </div>
+      <ul class="project-bullets">
+        <li>Designed and developed a full-stack conversational AI avatar application integrating the Tavus Persona API for real-time video generation with synchronized lip-sync and natural facial gestures.</li>
+        <li>Engineered the complete session lifecycle on the client and API layer including conversation creation, message routing, authentication handling, and graceful teardown against a third-party REST API.</li>
+        <li>Built a WebRTC-powered dual input system (voice and text) using Daily.js, managing real-time peer connection state, media stream handling, and low-latency (&lt;300ms) bi-directional communication.</li>
+      </ul>
+    </div>
+
+    <div class="project-card">
+      <div class="project-header">
+        <div class="project-name">Restaurant Ordering System</div>
+        <div class="project-date">Sep 2025</div>
+      </div>
+      <div class="project-stack">
+        <span class="stack-tag">Java</span>
+        <span class="stack-tag">Kotlin</span>
+        <span class="stack-tag">JavaFX</span>
+        <span class="stack-tag">MVC</span>
+      </div>
+      <ul class="project-bullets">
+        <li>Designed and developed a modular restaurant ordering system using JavaFX, incorporating both Java and Kotlin to enhance flexibility and modernize components.</li>
+        <li>Built an interactive, event-driven GUI for order creation and management. Refactored into Kotlin, decreasing boilerplate code by ~30% and improving readability.</li>
+        <li>Implemented MVC-inspired architecture with dedicated controller classes, reducing code duplication by ~25%.</li>
+      </ul>
+    </div>
+
+    <div class="project-card">
+      <div class="project-header">
+        <div class="project-name">OuttaLine Party Game App</div>
+        <div class="project-date">Mar 2024</div>
+      </div>
+      <div class="project-stack">
+        <span class="stack-tag">Flutter</span>
+        <span class="stack-tag">Firebase</span>
+        <span class="stack-tag">JavaScript</span>
+        <span class="stack-tag">WebSockets</span>
+      </div>
+      <ul class="project-bullets">
+        <li>Developed a real-time multiplayer social game using Flutter and Firebase, supporting up to 15 concurrent players per session.</li>
+        <li>Implemented WebSocket-based communication to enable low-latency (&lt;200ms) synchronization of game state across all connected clients.</li>
+        <li>Designed scalable backend logic using Firebase services (Firestore/Realtime DB), ensuring consistent data updates and session reliability.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="education" style="animation-delay:0.3s">
+    <div class="section-label">Education</div>
+
+    <div class="edu-card">
+      <div class="edu-degree">Bachelor of Science, Computer Science</div>
+      <div class="edu-school">Metropolitan State University — St. Paul, MN</div>
+      <div class="edu-date">Expected Dec 2026</div>
+      <div class="edu-courses">Relevant coursework: Database Management · Algorithm & Data Structures · Object Oriented Design · Cybersecurity Principles · Machine Architecture</div>
+    </div>
+
+    <div class="edu-card">
+      <div class="edu-degree">Associate of Science, Computer Science <span style="color:var(--accent);font-size:12px;">(Honors)</span></div>
+      <div class="edu-school">Normandale Community College</div>
+    </div>
+  </section>
+
+  <section id="experience" style="animation-delay:0.4s">
+    <div class="section-label">Experience</div>
+    <div class="exp-card">
+      <div class="exp-header">
+        <div class="exp-title">Tech Support Associate</div>
+        <div class="exp-date">Apr 2026</div>
+      </div>
+      <div class="exp-company">Alarm.com</div>
+      <ul class="exp-bullets">
+        <li>Provided technical support for smart home and security system products, troubleshooting hardware, connectivity, and software issues for end users.</li>
+        <li>Diagnosed and resolved network configuration issues involving Wi-Fi, cellular backup, and IoT device connectivity across various customer environments.</li>
+        <li>Documented support cases and escalated complex technical issues to engineering teams, maintaining clear communication throughout resolution.</li>
+      </ul>
+    </div>
+  </section>
+
+  <footer>
+    <span>© 2026 Sovann Phay</span>
+    <span style="color:var(--muted)">CS @ Metropolitan State University</span>
+    <a href="mailto:Phaysovann1@gmail.com" style="color:var(--accent);text-decoration:none;">phaysovann1@gmail.com</a>
+  </footer>
+</main>
+</body>
+</html>
